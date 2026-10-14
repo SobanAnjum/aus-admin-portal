@@ -620,10 +620,10 @@ export const subscribeToRoomMessages = (
     if (!isSubscribed) return;
 
     try {
-      const apiUrl = getApiUrl('');
+      const baseApiUrl = (getApiUrl('') || '').replace(/\/+$/, '');
       let wsUrl: string;
-      if (apiUrl && apiUrl.startsWith('http')) {
-        wsUrl = apiUrl.replace(/^http/, 'ws') + '/ws';
+      if (baseApiUrl && baseApiUrl.startsWith('http')) {
+        wsUrl = `${baseApiUrl.replace(/^http/, 'ws')}/ws`;
       } else if (typeof window !== 'undefined') {
         const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
         const host = window.location.port === '3000' || window.location.port === '3001'
